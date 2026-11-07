@@ -1,0 +1,143 @@
+<Window x:Class="OsdPanel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Width="345"
+        FontFamily="Consolas"
+        FontSize="18"
+        SizeToContent="Height"
+        ShowInTaskbar="False"
+        Topmost="True"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing"
+        Title="OSD Panel">
+    <Border x:Name="PanelBorder" Background="#CC14161A"
+            CornerRadius="10"
+            BorderBrush="#33FFFFFF"
+            BorderThickness="1"
+            Padding="10,8,10,6">
+        <StackPanel>
+            <TextBlock x:Name="TimeText" Foreground="White" FontFamily="Consolas" FontSize="19.5"
+                       HorizontalAlignment="Center" Text="—"/>
+            <TextBlock x:Name="UptimeText" Foreground="White" FontFamily="Consolas" FontSize="19.5"
+                       HorizontalAlignment="Center" Text="00:00:00"/>
+            <Separator Background="#44FFD700" Margin="0,4" Opacity="0.35"/>
+            <ScrollViewer x:Name="PanelScroller" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="900">
+            <Grid>
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Margin" Value="0,1"/>
+                            <Setter Property="FontFamily" Value="Consolas"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <StackPanel x:Name="LoadsSection"><DockPanel><TextBlock Text="Использование CPU:"/><TextBlock x:Name="CpuLoadText" HorizontalAlignment="Right"/></DockPanel>
+                    <DockPanel><TextBlock Text="Использование GPU:"/><TextBlock x:Name="GpuLoadText" HorizontalAlignment="Right"/></DockPanel>
+                    <DockPanel><TextBlock Text="Использование RAM:"/><TextBlock x:Name="RamLoadText" HorizontalAlignment="Right"/></DockPanel>
+                    <DockPanel><TextBlock Text="Использование VRAM:"/><TextBlock x:Name="VramLoadText" HorizontalAlignment="Right"/></DockPanel>
+                    </StackPanel>
+                    <StackPanel x:Name="MemorySection">
+                        <DockPanel><TextBlock Text="Доступно RAM:"/><TextBlock x:Name="RamFreeText" HorizontalAlignment="Right" Text="—"/></DockPanel>
+                        <DockPanel><TextBlock Text="Доступно VRAM:"/><TextBlock x:Name="VramFreeText" HorizontalAlignment="Right" Text="—"/></DockPanel>
+                    </StackPanel>
+                    <StackPanel x:Name="DiskSpaceSection">
+                    <Separator Background="#44FFD700" Margin="0,4" Opacity="0.35"/>
+                    <DockPanel><TextBlock Text="Диск / объём"/><TextBlock Text="свободно" HorizontalAlignment="Right" Opacity="0.6"/></DockPanel>
+                    <ItemsControl x:Name="DiskList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding Name}" Foreground="#FFD700" Opacity="0.85"/>
+                                    <TextBlock Text="{Binding Free}" Foreground="{Binding Color}" HorizontalAlignment="Right"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+</StackPanel>
+                    <StackPanel x:Name="TemperatureSection">
+                    <Separator Background="#44FFD700" Margin="0,4" Opacity="0.35"/>
+                    <DockPanel><TextBlock Text="Темп. CPU:"/><TextBlock x:Name="CpuTempText" HorizontalAlignment="Right"/></DockPanel>
+                    <DockPanel><TextBlock Text="Темп. GPU:"/><TextBlock x:Name="GpuTempText" HorizontalAlignment="Right"/></DockPanel>
+                    <DockPanel><TextBlock Text="Темп. MB:"/><TextBlock x:Name="MbTempText" HorizontalAlignment="Right"/></DockPanel>
+                    <ItemsControl x:Name="DiskTempList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding Name}" Foreground="#FFD700" Opacity="0.85"/>
+                                    <TextBlock Text="{Binding Temp}" Foreground="{Binding Color}" HorizontalAlignment="Right"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+</StackPanel>
+                    <StackPanel x:Name="HealthSection">
+                        <Separator Background="#44FFD700" Margin="0,4" Opacity="0.35"/>
+                        <TextBlock Text="Ресурс / состояние SMART" Opacity="0.6"/>
+                        <ItemsControl x:Name="DiskHealthList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <TextBlock Text="{Binding Name}" Foreground="#FFD700"/>
+                                        <TextBlock Text="{Binding Health}" Foreground="{Binding Color}" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    <StackPanel x:Name="FansSection">
+                    <Separator Background="#44FFD700" Margin="0,4" Opacity="0.35"/>
+                    <DockPanel><TextBlock Text="Вент. CPU:"/><TextBlock x:Name="CpuFanText" HorizontalAlignment="Right"/></DockPanel>
+                    <DockPanel><TextBlock Text="Вент. GPU:"/><TextBlock x:Name="GpuFanText" HorizontalAlignment="Right"/></DockPanel>
+</StackPanel>
+                    <StackPanel x:Name="ActivitySection">
+                        <Separator Background="#44FFD700" Margin="0,4" Opacity="0.35"/>
+                        <TextBlock Text="Диски: чтение ↓ / запись ↑" Opacity="0.6"/>
+                        <ItemsControl x:Name="DiskActivityList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Letter}" Foreground="White" Margin="0,0,8,0"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Read}" Foreground="White" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding Write}" Foreground="White" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    <StackPanel x:Name="DesSection">
+                        <Separator Background="#44FFD700" Margin="0,4" Opacity="0.35"/>
+                        <TextBlock x:Name="DesSummaryText" Text="DES: статус недоступен" Foreground="#A4ADB8" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="DesServersText" Text="Нет данных" Foreground="#A4ADB8" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <StackPanel x:Name="NetworkSection">
+                        <Separator Background="#44FFD700" Margin="0,4" Opacity="0.35"/>
+                        <TextBlock x:Name="AdapterText" Text="Сеть" Opacity="0.6" TextTrimming="CharacterEllipsis"/>
+                        <DockPanel><TextBlock Text="Загрузка ↓:"/><TextBlock x:Name="DownloadText" HorizontalAlignment="Right" Text="—"/></DockPanel>
+                        <DockPanel><TextBlock Text="Отдача ↑:"/><TextBlock x:Name="UploadText" HorizontalAlignment="Right" Text="—"/></DockPanel>
+                    </StackPanel>
+                    <StackPanel x:Name="IpSection">
+                    <Separator Background="#44FFD700" Margin="0,4" Opacity="0.35"/>
+                    <DockPanel><TextBlock Text="Внешний IP:"/><TextBlock x:Name="ExternalIpText" HorizontalAlignment="Right"/></DockPanel>
+                    <DockPanel><TextBlock Text="Локальный IP:"/><TextBlock x:Name="IpText" HorizontalAlignment="Right"/></DockPanel>
+</StackPanel>
+
+                </StackPanel>
+            </Grid>
+            </ScrollViewer>
+            <Border x:Name="GrabStrip" Height="12" Margin="0,4,0,0" CornerRadius="4"
+                    Background="#33FFD700"
+                    Cursor="SizeAll"
+                    MouseLeftButtonDown="GrabStrip_MouseLeftButtonDown"
+                    MouseMove="GrabStrip_MouseMove"
+                    MouseLeftButtonUp="GrabStrip_MouseLeftButtonUp">
+                <TextBlock x:Name="TopMostIndicator" Text="◈" Foreground="#66FFFFFF"
+                           FontSize="10.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+        </StackPanel>
+    </Border>
+</Window>

@@ -1,0 +1,21 @@
+<Window x:Class="OsdPanel.GameOverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OSD Panel — игровая строка"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        SizeToContent="WidthAndHeight" ResizeMode="NoResize"
+        ShowInTaskbar="False" ShowActivated="False" Focusable="False" Topmost="True"
+        FontFamily="Consolas" FontSize="18"
+        PreviewMouseLeftButtonDown="DragStarted" MouseMove="DragMoved"
+        PreviewMouseLeftButtonUp="DragFinished" LostMouseCapture="DragCaptureLost">
+    <Border x:Name="OverlayBorder" Background="#CC14161A" CornerRadius="4" Padding="8,4">
+        <Viewbox x:Name="OverlayViewbox" Stretch="Uniform" StretchDirection="DownOnly">
+            <TextBlock x:Name="MetricsText" Foreground="#ADFF2F" TextWrapping="NoWrap">
+                <Run Text="CPU: "/><Run x:Name="CpuValue" Text="—"/><Run Text="  |  GPU: "/><Run x:Name="GpuValue" Text="—"/>
+                <Run Text="  |  RAM: "/><Run x:Name="RamValue" Text="—"/><Run Text="  |  VRAM: "/><Run x:Name="VramValue" Text="—"/>
+                <Run Text="  |  t. CPU: "/><Run x:Name="CpuTemperatureValue" Text="—"/>
+                <Run Text="  |  t. GPU: "/><Run x:Name="GpuTemperatureValue" Text="—"/>
+            </TextBlock>
+        </Viewbox>
+    </Border>
+</Window>

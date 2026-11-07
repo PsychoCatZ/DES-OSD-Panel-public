@@ -1,0 +1,40 @@
+# .NET build output and local IDE files
+**/bin/
+**/obj/
+**/build/
+/release/
+.vs/
+.idea/
+*.user
+*.suo
+*.dll
+*.exe
+*.pdb
+*.sys
+
+# Local diagnostic output and machine-specific readings
+*.log
+/draglog.txt
+/probe_out.txt
+/screenshot.png
+# Legacy manual UI probes use the original screen/layout assumptions.
+/check_window.ps1
+/drag_test.ps1
+/hover_check.ps1
+/verification/*.json
+/verification/*.txt
+/verification/*-preview.png
+!/verification/panel-preview.png
+/verification/tray-icon.png
+
+# Local configuration, credentials and temporary files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.tmp
+*.bak
+Thumbs.db
+Desktop.ini

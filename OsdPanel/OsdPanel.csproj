@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>OsdPanel</RootNamespace>
+    <AssemblyName>OsdPanel</AssemblyName>
+    <ApplicationIcon>Assets\blue-circle.ico</ApplicationIcon>
+    <AssemblyTitle>OSD Panel</AssemblyTitle>
+    <Product>OSD Panel</Product>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- WPF owns the application and its DPI mode; WinForms is used only for the tray and Screen API. -->
+    <NoWarn>$(NoWarn);WFAC010</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\blue-circle.ico" />
+    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.3" />
+  </ItemGroup>
+
+</Project>
